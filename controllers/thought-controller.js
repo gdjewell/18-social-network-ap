@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { User, Thought } = require("../models");
 
 module.exports = {
+  //retrieve all thoughts along with reactions.
   getAllThoughts(req, res) {
     Thought.find()
       .populate("reactions")
@@ -14,7 +15,7 @@ module.exports = {
       })
       .catch((err) => res.status(500).json(err));
   },
-
+  //gets particular thought, and reactions.
   getThoughtById(req, res) {
     console.log(req.params.thoughtId);
     Thought.findOne({ _id: req.params.id })
@@ -30,6 +31,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
+  //creates a new thought
   newThought(req, res) {
     console.log(`test: ${req.body}`);
     Thought.create(req.body)
@@ -43,7 +45,7 @@ module.exports = {
       .then((data) => res.json(data))
       .catch((err) => res.status(500).json(err));
   },
-
+  //updates a particular thought
   updateThought(req, res) {
     console.log(req.params.id);
     Thought.findOneAndUpdate({ _id: req.params.id }, { $set: req.body })
@@ -56,6 +58,8 @@ module.exports = {
       })
       .catch((err) => res.status(500).json(err));
   },
+
+  //deletes a thought.
 
   deleteThought(req, res) {
     Thought.findOneAndDelete({ _id: req.params.id }, { $delete: req.body })
@@ -71,6 +75,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
+  //creates a reaction on a certain thought.
   addReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.id },
@@ -90,6 +95,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
+  //removces a particular reaction.
   removeReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.id },

@@ -27,7 +27,7 @@ const thoughtSchema = new Schema(
     id: false,
   }
 );
-
+// Create virtual that isn't stored in the database
 thoughtSchema.virtual("reactionCount").get(function () {
   return this.reactions.length;
 });
